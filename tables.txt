@@ -1,0 +1,87 @@
+USE MeuDB1
+
+create database MeuDB1
+on [PRIMARY]
+(
+name = 'MeuBD1_Primary',
+filename='C:\Users\Estudar\Documents\SQL Server Management Studio\Projects\MeuBD1_Prm.mdf',
+size=4MB,
+maxsize = 10MB,
+filegrowth = 1 MB),
+
+filegroup MeuBD1_FG1
+(
+name ='MeuBD1_FG1_Dat1',
+filename='C:\Users\Estudar\Documents\SQL Server Management Studio\Projects\MeuBD1_FG1_1.ndf',
+size = 1 MB,
+maxsize = 10 MB,
+filegrowth = 1MB),
+(
+name = 'MeuBD1+FG1_Dat2',
+filename='C:\Users\Estudar\Documents\SQL Server Management Studio\Projects\MeuBD1_FG1_2.ndf',
+size = 1 MB,
+maxsize = 10 MB,
+filegrowth = 1MB)
+
+log on
+(
+name = 'MeuBD1_log',
+filename='C:\Users\Estudar\Documents\SQL Server Management Studio\Projects\MeuBD1.ldf',
+size = 1 MB,
+maxsize = 10 MB,
+filegrowth= 1 MB); 
+
+GO
+
+alter database MeuDB1
+
+modify filegroup MeuBD1_FG1 default
+
+GO
+
+use MeuDB1
+
+create table DEPARTAMENTO(
+numero int identity(1,1),
+nome varchar(20),
+descricao varchar(200)
+constraint DEPARTAMENTO_pk primary key(numero)
+/*constraint DEPARTAMENTO_descricao foreign key(descricao) references table(campo)*/
+)
+ON [PRIMARY]
+GO
+
+
+
+
+insert into DEPARTAMENTO values('Compras','Responsável pelas operações de compras internas e externas')
+insert into DEPARTAMENTO values('Vendas','Responsável pelas operações de vendas internas e relacionamento com fornecedores')
+insert into DEPARTAMENTO values('Financeiro','Responsável pelas operações de tesouraria e aplicações financeiras')
+GO
+
+select * from DEPARTAMENTO 
+GO
+
+alter table DEPARTAMENTO
+alter column nome varchar(40);
+GO
+
+alter table DEPARTAMENTO 
+drop column descricao;
+GO
+
+insert into DEPARTAMENTO values('Segurança');
+GO
+
+select * from DEPARTAMENTO 
+GO
+
+delete from DEPARTAMENTO where numero = 5
+
+select * from DEPARTAMENTO
+GO
+
+drop table DEPARTAMENTO
+
+
+select * from sys.filegroups
